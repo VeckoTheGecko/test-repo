@@ -17,10 +17,10 @@ jobs:
     - name: Archive production artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: build-ubuntu
+        name: dist-ubuntu
         path: |
-          build/ubuntu
-          !build/**/*.md
+          out
+          !out/**/*.md
 
   build_on_mac:
     runs-on: macos-latest
@@ -37,10 +37,10 @@ jobs:
     - name: Archive production artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: build-mac
+        name: dist-mac
         path: |
-          build/mac
-          !build/**/*.md
+          out
+          !out/**/*.md
 
   build_on_win:
     runs-on: windows-latest
@@ -57,7 +57,7 @@ jobs:
     - name: Archive production artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: build-win
+        name: dist-win
         path: |
-          build/win
-          !build/**/*.md
+          out
+          !out/**/*.md
