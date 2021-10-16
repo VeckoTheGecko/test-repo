@@ -8,7 +8,7 @@ import { AppointmentModel } from "./models/appointment_sequelized";
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     dialectModule: sqlite,
-    storage: 'database.sqlite3'
+    storage: './database.sqlite3'
 });
 
 const Student = StudentModel(sequelize, Sequelize);
