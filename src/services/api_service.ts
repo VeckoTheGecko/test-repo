@@ -3,12 +3,13 @@ import { Sequelize } from "sequelize";
 
 import { StudentModel } from "./models/student_sequelized";
 import { AppointmentModel } from "./models/appointment_sequelized";
+const path = require('path');
 
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     dialectModule: sqlite,
-    storage: './database.sqlite3'
+    storage: path.resolve(__dirname, 'database.sqlite3')
 });
 
 const Student = StudentModel(sequelize, Sequelize);

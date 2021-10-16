@@ -27,7 +27,7 @@ const schema = {
 }
 
 // Disabling menubar for application (isn't used)
-Menu.setApplicationMenu(null)
+// Menu.setApplicationMenu(null)
 
 const store = new Store(schema);
 let win: BrowserWindow | null;
