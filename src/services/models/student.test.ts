@@ -18,7 +18,7 @@
 
 import 'regenerator-runtime/runtime'
 
-import { Student } from "../api_service";
+import { Student } from "../api_service.ts";
 import {
 	StudentModel,
 	getAllStudents,
@@ -27,6 +27,9 @@ import {
 	getStudent,
 	removeAll
 } from "./student_sequelized";
+
+import { StudentObj } from "./student_api"; //use this for typescript types (?)
+
 
 
 //Code quality is really sketchy, need to find a way to 'stack' the promises

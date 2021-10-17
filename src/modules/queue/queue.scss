@@ -12,12 +12,11 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 95vh;
 }
 
 .queue {
   margin: 40px;
-  width: 600px;
+  width: 500px;
   height: 80vh;
   border-radius: 4px;
   justify-items: center;
@@ -45,6 +44,10 @@
   div {
     text-align: left;
   }
+
+  .unit-code {
+    padding-top: 35px;
+  }
 }
 
 .student {
@@ -61,24 +64,14 @@
   // Separating status colours to small boxes next to student info
   .status-container {
     border-radius: 8px;
-    margin: auto 5px;
+    margin-top: auto;
+    margin-bottom: auto;
     color: white;
     width: 7em;
     height: fit-content;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-  }
-
-  //Student name and id
-  .name-id {
-    padding: 0 10px;
-    margin-left: 15px;
-  }
-
-  .unit-code {
-    padding-top: 35px;
-    margin: 0 10px;
   }
 }
 

@@ -43,6 +43,7 @@ const getStudent = (model, name) => {
 //This model is needed only for testing the student table.
 //The student will usually be added to the database via the addAppointment function
 async function addStudent(model, student){
+
 	const st = await model.create({ name: student.name, student_num: student.student_num });
 	return st;
 }
