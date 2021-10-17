@@ -17,8 +17,8 @@ async function exportDataWithPath(path, apptList) {
 			{ id: 'enquiry_type', title: 'Enquiry Type' },
 			{ id: 'notes', title: 'Notes' },
 			{ id: 'session_start', title: 'Session Start' },
-			{ id: 'session_len', title: 'Session Length' },
-			{ id: 'waittime', title: 'Wait Time' },
+			{ id: 'session_len', title: 'Session Length (mins)' },
+			{ id: 'waittime', title: 'Wait Time (mins)' },
 		]
 	});
 	exportStudentsCSV(apptList, csvWriter);

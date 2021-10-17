@@ -11,6 +11,10 @@ Use the node.js package manager [npm](https://www.npmjs.com/) to install the pro
 ```bash
 npm install
 ```
+In order to package native dependencies (like sqlite3) you need Visual Studio installed with the desktop development with c++ environment
+
+or you can install the windows-build-tools npm package (not sure if this works, you're better off with the former option).
+
 
 ## Usage
 

@@ -5,10 +5,15 @@ import DataInputForm from "./data-input-form/data-input-form";
 import "./queue.scss";
 
 // Importing helper function
-import { arrange_queue, calcWaitTimeStrings, calcQueueWaitTime } from "../../shared/utils";
+import { arrange_queue, calcWaitTimeStrings } from "../../shared/utils";
 
 const QueueContainer: React.FC = (): JSX.Element => {
-  const { app_state, removeQueueItem, updateQueueItemStatus, updateQueueItemWaitTime } = useAppContext();
+  const {
+    app_state,
+    removeQueueItem,
+    updateQueueItemStatus,
+    updateQueueItemWaitTime,
+  } = useAppContext();
 
   const [open, setOpen] = React.useState(false);
 
@@ -22,7 +27,11 @@ const QueueContainer: React.FC = (): JSX.Element => {
 
   return (
     <div className="queue-container">
-      <Queue name="Student Leaders" data={app_state.queues.studysmarter} selected_id={app_state.selected_id} />
+      <Queue
+        name="Learning Advisers"
+        data={app_state.queues.studysmarter}
+        selected_id={app_state.selected_id}
+      />
 
       {/* Testing style of buttons*/}
       <div className="btn-container">
@@ -68,7 +77,11 @@ const QueueContainer: React.FC = (): JSX.Element => {
         </button>
       </div>
 
-      <Queue name="Librarians" data={app_state.queues.librarian} selected_id={app_state.selected_id} />
+      <Queue
+        name="Librarians"
+        data={app_state.queues.librarian}
+        selected_id={app_state.selected_id}
+      />
 
       <Modal
         open={open}
@@ -106,17 +119,11 @@ const Queue: React.FC<QueueInfo> = (props) => {
     );
   });
 
-  const exp_wait_time = calcQueueWaitTime(queue)
-
   // Rendering queue
   return (
     <div className="queue">
       <h1>{props.name}</h1>
       {rendered_students}
-
-      <p className='p1'>
-        Est. wait time: <b>{exp_wait_time}</b> mins
-      </p>
     </div>
   );
 };
@@ -127,63 +134,64 @@ const Student: React.FC<AppointmentState> = (props) => {
 
   const updateTimer = useRef(null);
 
-  const calcTime = (): { text: string, status: Status } => {
+  const calcTime = (): { text: string; status: Status } => {
     const { mins, secs } = calcWaitTimeStrings(display_data.target);
 
-    if (mins == '00' && secs == '00') return { text: 'TIME UP', status: 'time-up' }
+    if (mins == "00" && secs == "00")
+      return { text: "TIME UP", status: "time-up" };
 
-    return { text: `${mins}:${secs}`, status: 'in-session' };
-  }
+    return { text: `${mins}:${secs}`, status: "in-session" };
+  };
 
   const [displayed_data, setDisplayData] = useState(calcTime());
 
   const setUpdateTimer = () => {
     updateTimer.current = setInterval(() => {
-      const data = calcTime()
-      if (data.status == 'time-up') clearUpdateTimer()
+      const data = calcTime();
+      if (data.status == "time-up") clearUpdateTimer();
       setDisplayData(data);
       display_data.status = data.status;
-      display_data.text = data.text
+      display_data.text = data.text;
     }, 1000);
-  }
+  };
 
   const clearUpdateTimer = () => {
-    console.log("clearing update timer")
+    console.log("clearing update timer");
     clearInterval(updateTimer.current);
     updateTimer.current = undefined;
-  }
+  };
 
   const checkStatus = () => {
-    if (updateTimer.current) clearUpdateTimer()
+    if (updateTimer.current) clearUpdateTimer();
     switch (display_data.status) {
-      case 'in-queue': {
-        setDisplayData(display_data)
+      case "in-queue": {
+        setDisplayData(display_data);
         break;
       }
-      case 'in-session': {
-        setDisplayData(display_data)
-        setUpdateTimer()
+      case "in-session": {
+        setDisplayData(display_data);
+        setUpdateTimer();
         break;
       }
-      case 'time-up': {
-        setDisplayData(display_data)
+      case "time-up": {
+        setDisplayData(display_data);
         break;
       }
     }
-  }
+  };
 
   useEffect(() => {
-    console.log("component mounted")
-    checkStatus()
+    console.log("component mounted");
+    checkStatus();
 
     return () => {
-      console.log("component unmounted")
-      if (updateTimer.current) clearUpdateTimer()
-    }
+      console.log("component unmounted");
+      if (updateTimer.current) clearUpdateTimer();
+    };
   }, []);
 
   useEffect(() => {
-    checkStatus()
+    checkStatus();
   }, [props]);
 
   return (
@@ -195,15 +203,17 @@ const Student: React.FC<AppointmentState> = (props) => {
       <div className={`status-container ${displayed_data.status}`}>
         <p>{displayed_data.text}</p>
       </div>
-      <div>
-        <p><b>{capture_data.student.name}</b></p>
+
+      <div className="name-id">
+        <p>
+          <b>{capture_data.student.name}</b>
+        </p>
         <p>{capture_data.student.student_num}</p>
       </div>
 
-      <div className='unit-code'>
+      <div className="unit-code">
         <p>{capture_data.unit_code}</p>
       </div>
-
     </div>
   );
 };

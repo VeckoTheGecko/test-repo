@@ -77,26 +77,3 @@ export const calcWaitTimeStrings = (target) => {
 
   return { mins, secs };
 };
-
-export const calcQueueWaitTime = (queue: AppointmentState[]): string => {
-  // Function to calculate and format the wait time for the queues in Queue.tsx.
-  
-  const Q = queue.filter((appointment) => {
-    return appointment.display_data.status == "in-queue";
-  }).length;
-
-  const S = queue.filter((appointment) => {
-    return appointment.display_data.status == "in-session";
-  }).length;
-
-  // Formula to calculate wait time
-  let time = 7.5 + (Q / S) * 15;
-
-  // Rounding up to the nearest 2.5 mins
-  time = Math.ceil(time / 2.5) * 2.5;
-
-  if (!isFinite(time) || isNaN(time)) {
-    return "--";
-  }
-  return String(time);
-};

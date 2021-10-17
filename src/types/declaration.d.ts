@@ -8,7 +8,7 @@ declare module "*.png";
 // Props are read only and passed in on render
 
 declare type Status = "in-queue" | "in-session" | "time-up";
-declare type Team = "STUDYSmarter" | "Librarian";
+declare type Team = "Learning Adviser" | "Librarian";
 
 declare interface FormOutput {
   name: string;

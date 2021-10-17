@@ -11,21 +11,89 @@ const HelpContainer: React.FC = (): JSX.Element => {
         <p>Table of Contents</p>
         <hr />
         <li>
+          <a href="#imp">Important Notes</a>
+        </li>
+        <li>
           <a href="#dashboard">Dashboard</a>
         </li>
         <li>
           <a href="#usage">Usage</a>
         </li>
-        <li>
-          <a href="#settings">Settings</a>
-        </li>
       </nav>
 
       <div className="contents-container">
-        <DashboardContent></DashboardContent>
-        <UsageContent></UsageContent>
-        <SettingsContent></SettingsContent>
+        <ImportantContent />
+        <DashboardContent />
+        <UsageContent />
       </div>
+    </div>
+  );
+};
+
+const ImportantContent: React.FC = (): JSX.Element => {
+  return (
+    <div>
+      <h1 id="imp">Important Notes</h1>
+
+      <h3>1. Appointments added into the Database</h3>
+      <p>
+        <b>※</b> Clicking <b>DELETE SELECTED ROWS</b> or <b>DELETE DB</b> in the
+        usage page will <i>permanently</i> delete the selected rows or all data
+        respectively. In the case of <b>DELETE DB</b> an extra popup will ask
+        for confirmation. These operations are irreversible.
+      </p>
+      <p>
+        <b>※</b> Appointments are only added in the database once they have gone
+        from "In Queue" to "In Session" to "Complete". If a session has been
+        marked as "Complete" when they were previously "In Queue", they will{" "}
+        <strong>not</strong> be recorded in the database. The <b>Usage</b> tab
+        will only show appointments in the database.
+      </p>
+      <p>
+        <b>※</b> If there's any no show and would like this appointment added
+        into the database, put the respective appointment in session, and then
+        complete the appointment. Refer to the last point below to edit this
+        appointment.
+      </p>
+      <p>
+        <b>※</b> Appointment info cannot be edited once it has been added to the
+        queue or database. If edits are required, either remove the appointment
+        in the queue by completing it (don't put it <b>IN SESSION</b> so it
+        won't be added in the database), then add the appointment again with the
+        updated details. Or you can export the data and change the data recorded
+        in the CSV.
+      </p>
+      <p>
+        <b>※</b> Each appointments added in the queue are unique via the student
+        number. If another appointment has the same student number in the same
+        queue, then the new appointment made won't be added into that queue. Eg,
+        if Bob has the student id as 12345678, and was in the{" "}
+        <b>Learning Adviser</b> queue, then Phil who was accidentally given the
+        same student id as Bob can't be added in the <b>Learning Adviser</b>{" "}
+        queue. However, if Bob wants to be in both of the queues, the respective
+        appointments can be added into the respective queues.
+      </p>
+
+      <h3>2. Form Inputs</h3>
+      <p>
+        <b>※</b> Name input can contain alphabetical, comma, apostrophe, period,
+        space, and hyphen characters.
+      </p>
+      <p>
+        <b>※</b> Student ID needs to have 8 digits of numerical values only. Eg,
+        12345678.
+      </p>
+      <p>
+        <b>※</b> Unit code must have 4 alphabetical characters at the start,
+        followed by 4 numerical values. Eg, cits3200. Otherwise, it can be left
+        blank if the students query isn't specific to a unit.
+      </p>
+      <p>
+        <b>※</b> Notes input accepts alphabetical, (), /, hyphen, space, and
+        comma characters. It has a maximum size of 150 characters.
+      </p>
+
+      <br />
     </div>
   );
 };
@@ -33,14 +101,16 @@ const HelpContainer: React.FC = (): JSX.Element => {
 const DashboardContent: React.FC = (): JSX.Element => {
   return (
     <div>
-      {/* Dashboard content */}
       <h1 id="dashboard">Dashboard</h1>
-
       <p>
         The Dashboard page is where the queueing system mechanism will be in
-        active. This is where users will spent the most time on this
+        active. This is where users will spend the most time on this
         application. The following sections below are provided in the hopes to
         aide in the functionalities and general view of the Dashboard page.
+      </p>
+      <p>
+        <b>NOTE:</b> Please read the <b>Important Notes</b> section before using
+        the application.
       </p>
 
       <h2>General view of the page:</h2>
@@ -52,7 +122,7 @@ const DashboardContent: React.FC = (): JSX.Element => {
 
       <ol className="num-li">
         <li>
-          <span>Queue</span>
+          <span>Queues</span>
         </li>
         <li>
           <span>
@@ -65,9 +135,6 @@ const DashboardContent: React.FC = (): JSX.Element => {
         <li>
           <span>Buttons – Manipulates the queues.</span>
         </li>
-        <li>
-          <span>Estimated wait times</span>
-        </li>
       </ol>
 
       <h2>Functionalities:</h2>
@@ -77,13 +144,11 @@ const DashboardContent: React.FC = (): JSX.Element => {
         There are two queues displayed on the page. Both queues will contain a
         number of <b>Appointments</b> that holds information for the user to
         distinguish. Information displayed in the appointment are the name of
-        the student, their student number, unit code, and its status. The{" "}
-        <b>Appointment Status</b> has three states: IN QUEUE, TIME UP, and
-        displaying the time remaining once it is in session.
+        the student, their student number, unit code, and its status.
       </p>
       <p>
-        Also, at the bottom of each queue is an <b>Estimated Wait time</b>, to
-        help the user give out an estimate for students if needed be.
+        The <b>Appointment Status</b> has three states: IN QUEUE, TIME UP, and
+        displaying the time remaining once it is in session.
       </p>
 
       <h3>2. Buttons</h3>
@@ -101,28 +166,30 @@ const DashboardContent: React.FC = (): JSX.Element => {
         <li>
           <p>
             <b>Queue</b> – Changes appointment status in a blue colour with
-            words 'IN QUEUE'.
+            words 'IN QUEUE' displayed. User can use this if an appointment was
+            accidentally put in session.
           </p>
         </li>
         <li>
           <p>
             <b>+1 or -1</b> – Adds or subtracts one minute of the timer for the
-            appointment; if finished appointment status change to an orange
-            colour with words 'TIME UP'.
+            appointment, if finished appointment status change to an orange
+            colour with words 'TIME UP' displayed.
           </p>
         </li>
         <li>
           <p>
             <b>Add Student</b> – Pops out a form to fill in the information
-            needed from the student, and once completed it will be added in the
-            respective queue (STUDYSmarter or Librarian).
+            needed from the student, and once completed it will be added into
+            the respective queue (Learning Adviser or Librarian).
           </p>
         </li>
         <li>
           <p>
-            <b>Complete Appointment</b> – The appointment is removed from the
-            queue as its session has finished, and adds its information in the
-            database.
+            <b>Complete Appointment</b> – The appointment will be removed from
+            the queue as its session has finished, and adds its information in
+            the database. The appointment can also appear in the{" "}
+            <i>Historical View</i> in the usage page.
           </p>
         </li>
       </ul>
@@ -154,30 +221,28 @@ const DashboardContent: React.FC = (): JSX.Element => {
         <li>
           <p>
             <b>Unit Code</b> – Must contain 4 letters, followed by 4 numbers.
-            Example: cits3200.
+            Can be left blank. Example: cits3200.
           </p>
         </li>
         <li>
           <p>
-            <b>Team</b> – Has 2 options by default, STUDYSmarter or Librarian.
-            This can be changed in the Settings page.
+            <b>Team</b> – Has 2 options, Learning Adviser or Librarian.
           </p>
         </li>
         <li>
           <p>
-            <b>Enquiry</b> – Couple of options but can be changed in the
-            Settings page.
+            <b>Enquiry</b> – Couple of options to choose from. If the options
+            are not listed then choose <b>Other (See Notes)</b> and write its
+            description in the <b>Notes</b> input.
           </p>
         </li>
         <li>
           <p>
-            <b>Notes</b> – Additional enquiries that are not specified in the
-            Enquiry option. Maximum of 150 characters including space.
+            <b>Notes</b> – Additional description. Maximum of 150 characters
+            including space.
           </p>
         </li>
       </ul>
-
-      {/* Demo short vid may be added in after styling are finalised */}
 
       <br />
     </div>
@@ -187,12 +252,17 @@ const DashboardContent: React.FC = (): JSX.Element => {
 const UsageContent: React.FC = (): JSX.Element => {
   return (
     <div>
-      {/* Usage content */}
       <h1 id="usage">Usage</h1>
-
       <p>
         The usage page is where you are able to view the history of the service,
-        and view the data stored on the machine.
+        and view the data stored on the machine. This is also where you can
+        export relevant data based on the date range, delete specific data
+        checked in the <b>Historical View</b> section, or reset the whole
+        database (clearing it all).
+      </p>
+      <p>
+        <b>NOTE:</b> Please read the <b>Important Notes</b> section before using
+        the application.
       </p>
 
       <h2>General View of the page:</h2>
@@ -212,7 +282,7 @@ const UsageContent: React.FC = (): JSX.Element => {
           <span>Date Ranges</span>
         </li>
         <li>
-          <span>Buttons – see functionalities for more details.</span>
+          <span>Buttons – See functionalities for more details.</span>
         </li>
         <li>
           <span>Data Columns</span>
@@ -284,7 +354,7 @@ const UsageContent: React.FC = (): JSX.Element => {
         <li>
           <p>
             <b>Wait Time</b> – The time (in minutes) between the student being
-            added to the system, and being marked as "in session".
+            added to the system, and being marked as "<b>IN SESSION</b>".
           </p>
         </li>
         <li>
@@ -310,44 +380,21 @@ const UsageContent: React.FC = (): JSX.Element => {
         </li>
         <li>
           <p>
-            <b>DELETE SELECTED ROW</b> – Deletes rows that are checked/selected.
-            Can select all by clicking on the top most checkbox.
+            <b>DELETE SELECTED ROW</b> – Deletes rows that are checked/selected
+            in the Historical View. Can select all by clicking on the top most
+            checkbox.
           </p>
         </li>
       </ul>
 
       <h3>4. Data Navigation</h3>
       <p>
-        By clicking the buttons are the bottom of the page, you can view
-        multiple pages of data.
+        By clicking the buttons at the bottom of the page, you can view multiple
+        pages of data. You can also change the limit of rows viewed in one page.
+        Only have the option of 5, 10 or 15 rows of data to be shown.
       </p>
 
       <br />
-    </div>
-  );
-};
-
-const SettingsContent: React.FC = (): JSX.Element => {
-  return (
-    <div>
-      {/* Settings content, may discontiue this */}
-      <h1 id="settings">Settings</h1>
-
-      <h2>General view of the page:</h2>
-
-      <p>
-        (Insert screenshot of the settings page with numbers for parts; ie like
-        a diagram)
-      </p>
-      <p>Each numbers will be annotated</p>
-
-      <h2>Functionalities:</h2>
-
-      <p>- Changing form inputs</p>
-      <p>
-        - Visiualisation on the effects (could be screenshots and/or quick video
-        demo)
-      </p>
     </div>
   );
 };

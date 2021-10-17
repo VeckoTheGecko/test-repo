@@ -26,8 +26,8 @@ const columns = [
   { flex: 1, field: "team", headerName: "Team" },
   { flex: 1, field: "enquiry_type", headerName: "Enquiry" },
   { flex: 1, field: "session_start", headerName: "Start" },
-  { flex: 1, field: "session_len", headerName: "Length" },
-  { flex: 1, field: "waittime", headerName: "Wait Time" },
+  { flex: 1, field: "session_len", headerName: "Length (mins)" },
+  { flex: 1, field: "waittime", headerName: "Wait Time (mins)" },
   { flex: 1, field: "notes", headerName: "Notes" },
 ];
 
@@ -96,14 +96,11 @@ const Usage = (): JSX.Element => {
   };
 
   const d1 = new Date();
-  d1.setHours(0, 0, 0, 0);
-
-  const [to, setTo] = useState<Date | null>(d1);
-
   const d2 = new Date();
-  d2.setMonth(d2.getMonth() - 1);
+  d1.setHours(0, 0, 0, 0);
   d2.setHours(0, 0, 0, 0);
 
+  const [to, setTo] = useState<Date | null>(d1);
   const [from, setFrom] = useState<Date | null>(d2);
 
   const [pageSize, setPageSize] = useState<number>(10);
@@ -165,17 +162,18 @@ const Usage = (): JSX.Element => {
 
             <Button
               variant="outlined"
-              style={{ marginLeft: "auto" }}
+              style={{ marginLeft: "auto"}}
               onClick={handlePurge}
+              id="btn"
             >
               Delete selected Rows
             </Button>
 
-            <Button variant="outlined" onClick={deleteDbClick}>
+            <Button variant="outlined" onClick={deleteDbClick} id="btn2">
               Delete DB
             </Button>
 
-            <Button variant="outlined" onClick={handleClick}>
+            <Button variant="outlined" onClick={handleClick} id="btn3">
               Export Data
             </Button>
           </Stack>
