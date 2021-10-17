@@ -5,35 +5,26 @@ import { Sequelize, Op } from "sequelize";
 import { Appointment } from "../api_service";
 
 const AppointmentModel = (sequelize, type) => {
-	return sequelize.define('appointment',  {
+	return sequelize.define('appointment', {
 		id: {
 			type: type.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
 		},
-
-
 		unit_code: type.STRING,
-
 		team: type.STRING,
-
 		enquiry_type: type.STRING,
-
 		notes: type.STRING,
-
 		session_start: type.DATE,
-
 		session_len: type.INTEGER,
-
 		waittime: type.INTEGER,
-
 	})
 };
 
 
 // Lists out the entire appt table
 const getAllAppts = (apptModel, studentModel) => {
-    return apptModel.findAll({
+	return apptModel.findAll({
 		include: [{
 			model: studentModel,
 		}]
@@ -47,10 +38,10 @@ const totalNoAppts = (model) => {
 
 //Get list of all appointments that receive consultations
 const getAppts_Consul = (model) => {
-    return model.findAll({
+	return model.findAll({
 		where: {
-			session_len:{
-				[sequelize.Op.not]: NULL
+			session_len: {
+				[Op.not]: null
 			}
 		}
 	});
@@ -68,7 +59,6 @@ const avgSessionLen = (model) => {
 //very basic find method, finds based on .notes field
 const findAppt = (model, notes) => {
 	return model.findOne({ where: { notes: notes } });
-
 };
 
 //add an appointment to db
@@ -77,44 +67,42 @@ const findAppt = (model, notes) => {
 //https://sequelize.org/v3/docs/associations/
 //appointment and student are json objects.
 
-async function addAppointment(appointmentModel,studentModel, appointment){
+async function addAppointment(appointmentModel, studentModel, appointment) {
 	//const student = await addStudent(studentModel, appointment.student);
 
 	const appt = await appointmentModel.create({
-	  unit_code: appointment.unit_code,
-	  team: appointment.team,
-	  enquiry_type: appointment.enquiry_type,
-	  notes: appointment.notes,
-	  session_start: appointment.session_start,
-	  session_len : appointment.session_len,
-	  waittime : appointment.waittime,
+		unit_code: appointment.unit_code,
+		team: appointment.team,
+		enquiry_type: appointment.enquiry_type,
+		notes: appointment.notes,
+		session_start: appointment.session_start,
+		session_len: appointment.session_len,
+		waittime: appointment.waittime,
 
-	  student : {
-	    name: appointment.student.name,
-		student_num: appointment.student.student_num
-	  }
+		student: {
+			name: appointment.student.name,
+			student_num: appointment.student.student_num
+		}
 	}, {
-	  include: [ studentModel ]
+		include: [studentModel]
 	});
 	return appt;
 }
 
-async function removeAll(model){
+async function removeAll(model) {
 	return await model.destroy({
 		where: {},
-		truncate:true
+		truncate: true
 	});
 }
 
-async function deleteAppt(model){
+async function deleteAppt(model,appointmentId){
 	return await model.destroy({
 		where:{
-			//link to front-end user selection?
-			id: Appointment.id
+			id: appointmentId
 			}
 	});
 }
-
 
 //In the future, we will not need to pass the 'today' and 'yesterday' variables
 //they are needed now, because test cases have concrete-set 'session start' times,
@@ -131,10 +119,10 @@ const getApptsForHistoryView = async (apptModel, studentModel, earliest, latest)
 	console.log('latest: ' + latest);
 
 	return apptModel.findAll({
-		where : {
+		where: {
 			session_start: {
-      			[Op.between]: [earliest, latest]
-    		}
+				[Op.between]: [earliest, latest]
+			}
 		},
 		include: [{
 			model: studentModel,

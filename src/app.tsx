@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import '@/global.scss';
-import { BrowserRouter as Router, Link, Redirect, Route, Switch } from 'react-router-dom';
+import './global.scss';
+import { MemoryRouter, Link, Route, Switch } from 'react-router-dom';
 import modules from './modules/modules';
-import ErrorBoundary from '@/shared/error-boundary';
-// import { ApiService } from '@/services/api.service';
+import ErrorBoundary from './shared/error-boundary';
 import logo from './assets/icon/favicon.png';
 
 function App(): JSX.Element {
@@ -11,7 +10,7 @@ function App(): JSX.Element {
 
     return (
         <ErrorBoundary>
-            <Router forceRefresh={false}>
+            <MemoryRouter>
                 <div className="app">
                     <div className="tab-bar">
                         <img src={logo}/>
@@ -28,9 +27,6 @@ function App(): JSX.Element {
                         </div>
                     </div>
                     <Switch>
-                        <Route exact path="/">
-                            <Redirect to="/queue"/>
-                        </Route>
                         {modules.map((module) => {
                             return (
                                 <Route exact {...module.routeProps} key={module.name}/>
@@ -38,7 +34,7 @@ function App(): JSX.Element {
                         })}
                     </Switch>
                 </div>
-            </Router>
+            </MemoryRouter>
         </ErrorBoundary>
     )
 }

@@ -4,7 +4,7 @@
 export const locate_selected_appointment = (
   queues: QueuesState,
   selected_id: number | undefined
-): {queue_key: string, index: number} | undefined => {
+): { queue_key: string; index: number } | undefined => {
   // This function takes in the queues object, as well as the selected_id.
   // Function returns the key of the queue with the selected appointment, and the index of the selected appointment
   // Returns false if the id isn't found
@@ -66,7 +66,6 @@ const queue_sorting_logic = (appointment: AppointmentState) => {
   return status_sort * date_sort;
 };
 
-
 export const calcWaitTimeStrings = (target) => {
   let time_delta = target - new Date().getTime();
   time_delta = time_delta > 0 ? time_delta / 1000 : 0; // Convert to seconds
@@ -76,5 +75,12 @@ export const calcWaitTimeStrings = (target) => {
   mins = mins.padStart(2, "0");
   secs = secs.padStart(2, "0");
 
-  return {mins, secs};
-} 
+  return { mins, secs };
+};
+
+export const formatDate = (date:Date) => {
+  let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+  let mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(date);
+  let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+  return `${ye}-${mo}-${da}`;
+}

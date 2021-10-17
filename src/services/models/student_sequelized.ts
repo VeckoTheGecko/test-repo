@@ -28,12 +28,6 @@ const totalNoStudents = (model) => {
 
 const getStudent = (model, name) => {
 	return model.findOne({ where: { name: name } });
-	/*if (student === null) {
-		console.log('Not found!');
-	} else {
-		console.log(student instanceof model); // true
-		console.log(student.name); // 'Yuri Zhivago'
-	}*/
 }
 
 //add a student to db
@@ -43,7 +37,6 @@ const getStudent = (model, name) => {
 //This model is needed only for testing the student table.
 //The student will usually be added to the database via the addAppointment function
 async function addStudent(model, student){
-
 	const st = await model.create({ name: student.name, student_num: student.student_num });
 	return st;
 }

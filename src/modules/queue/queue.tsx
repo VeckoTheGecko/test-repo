@@ -1,11 +1,11 @@
-import { useAppContext } from "@/services/queue.service";
+import { useAppContext } from "../../services/queue.service";
 import { Fade, Modal, Backdrop } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
 import DataInputForm from "./data-input-form/data-input-form";
 import "./queue.scss";
 
 // Importing helper function
-import { arrange_queue, calcWaitTimeStrings } from "@/shared/utils";
+import { arrange_queue, calcWaitTimeStrings } from "../../shared/utils";
 
 const QueueContainer: React.FC = (): JSX.Element => {
   const {
@@ -28,7 +28,7 @@ const QueueContainer: React.FC = (): JSX.Element => {
   return (
     <div className="queue-container">
       <Queue
-        name="Student Leaders"
+        name="Learning Advisers"
         data={app_state.queues.studysmarter}
         selected_id={app_state.selected_id}
       />
@@ -119,25 +119,11 @@ const Queue: React.FC<QueueInfo> = (props) => {
     );
   });
 
-  const Q = queue.filter((appointment) => {
-    return appointment.display_data.status == "in-queue";
-  }).length;
-
-  const S = queue.filter((appointment) => {
-    return appointment.display_data.status == "in-session";
-  }).length;
-
-  const time = 7.5 + (Q / S) * 15;
-
   // Rendering queue
   return (
     <div className="queue">
       <h1>{props.name}</h1>
       {rendered_students}
-
-      <p className="p1">
-        Est. wait time: <b>{time ? time : 0}</b> mins
-      </p>
     </div>
   );
 };
@@ -146,7 +132,7 @@ const Student: React.FC<AppointmentState> = (props) => {
   const { selectAppointment } = useAppContext();
   const { capture_data, display_data, selected, unique_id } = props;
 
-  const updateTimer = useRef();
+  const updateTimer = useRef(null);
 
   const calcTime = (): { text: string; status: Status } => {
     const { mins, secs } = calcWaitTimeStrings(display_data.target);
@@ -217,7 +203,8 @@ const Student: React.FC<AppointmentState> = (props) => {
       <div className={`status-container ${displayed_data.status}`}>
         <p>{displayed_data.text}</p>
       </div>
-      <div>
+
+      <div className="name-id">
         <p>
           <b>{capture_data.student.name}</b>
         </p>
@@ -233,7 +220,7 @@ const Student: React.FC<AppointmentState> = (props) => {
 
 export default {
   routeProps: {
-    path: "/queue",
+    path: "/",
     component: QueueContainer,
   },
   name: "Dashboard",

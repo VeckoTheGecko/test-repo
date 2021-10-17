@@ -24,12 +24,9 @@ import 'regenerator-runtime/runtime'
 
 
 
-import { Student, Appointment} from "../api_service.ts";
+import { Student, Appointment} from "../api_service";
 import {
-	AppointmentModel,
-	getAllAppts,
 	totalNoAppts,
-	getAppts_Consul,
 	avgSessionLen,
 	findAppt,
 	addAppointment,
@@ -37,18 +34,14 @@ import {
 	getApptsForHistoryView
 } from "./appointment_sequelized";
 
-import { AppointmentObj } from "./appointment_api"; //use this for typescript types (?)
-
 
 test('adds appointment to database', async () => {
 
 	const remove1 = await removeAll(Appointment);
-	//const remove2 = await removeAll(Student);
 
 	const adding = await addAppointment(Appointment, Student, sampleAppointments.appointment1);
 	const appt = await findAppt(Appointment, sampleAppointments.appointment1.notes);
 
-	//const remove22 = await removeAll(Student);
 	const remove11 = await removeAll(Appointment);
 
  	expect(appt.notes).toBe(sampleAppointments.appointment1.notes); //CHANGE THIS TO BE IN PROMISE FORMAT
@@ -57,7 +50,6 @@ test('adds appointment to database', async () => {
 
 test('shows total number of appointments in database', async () => {
 
-	//const remove2 = await removeAll(Student);
 	const remove1 = await removeAll(Appointment);
 
 	const adding1 = await addAppointment(Appointment, Student, sampleAppointments.appointment1);
@@ -65,7 +57,6 @@ test('shows total number of appointments in database', async () => {
 
 	const noAppts = await totalNoAppts(Appointment);
 
-	//const remove22 = await removeAll(Student);
 	const remove11 = await removeAll(Appointment);
 
  	expect(noAppts).toBe(2); //CHANGE THIS TO BE IN PROMISE FORMAT
@@ -75,15 +66,12 @@ test('shows total number of appointments in database', async () => {
 test('shows average session time', async () => {
 
 	const remove1 = await removeAll(Appointment);
-	//const remove2 = await removeAll(Student);
 
 	const adding1 = await addAppointment(Appointment, Student, sampleAppointments.appointment1);
 	const adding2 = await addAppointment(Appointment, Student, sampleAppointments.appointment2);
 	const avgSessionTime = await avgSessionLen(Appointment);
 
 	const remove11 = await removeAll(Appointment);
-	//const remove22 = await removeAll(Student);
-
 
  	expect(avgSessionTime[0]['AVG(`session_len`)']).toBe(9); //CHANGE THIS TO BE IN PROMISE FORMAT
 });
@@ -91,7 +79,6 @@ test('shows average session time', async () => {
 test('returns all appointments added today for history view', async () => {
 
 	const remove1 = await removeAll(Appointment);
-	//const remove2 = await removeAll(Student);
 
 	const adding1 = await addAppointment(Appointment, Student, sampleAppointments.appointment1);
 	const adding2 = await addAppointment(Appointment, Student, sampleAppointments.appointment2);
@@ -108,8 +95,6 @@ test('returns all appointments added today for history view', async () => {
 	console.log(`All Appointments between ${earliest}, and ${latest}:`);
 	console.log(allAppts);
 	const remove11 = await removeAll(Appointment);
-	//const remove22 = await removeAll(Student);
-
 
  	expect(allAppts.length).toBe(2); //CHANGE THIS TO BE IN PROMISE FORMAT
 });

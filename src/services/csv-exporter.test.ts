@@ -29,13 +29,13 @@ import {
 	addAppointment,
 } from "./models/appointment_sequelized";
 
-import { Student, Appointment } from "./api_service.ts";
+import { Student, Appointment } from "./api_service";
 
 
 
 const csv = require('csv-parser');
 const fs = require('fs');
-import { exportStudentsCSV, getFormattedAppts } from "./csv-export-script.ts";
+import { exportStudentsCSV, getFormattedAppts } from "./csv-export-script";
 
 //Code quality is really sketchy, need to find a way to 'stack' the promises
 test('Exports a csv file from student db', async () => {
@@ -56,9 +56,7 @@ test('Exports a csv file from student db', async () => {
 
 
     console.log('APPOINTMENT LIST LENGTH:', apptList.length);
-	const exp = await exportStudentsCSV(apptList);
-
-	//console.log(data);
+	const exp = await exportStudentsCSV(apptList, csv);
 
 	const remove1 = await removeAll(Student);
 	const remove2 = await removeAll(Appointment);

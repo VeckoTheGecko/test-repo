@@ -11,35 +11,53 @@ Use the node.js package manager [npm](https://www.npmjs.com/) to install the pro
 ```bash
 npm install
 ```
+In order to package native dependencies (like sqlite3) you need Visual Studio installed with the desktop development with c++ environment
+
+or you can install the windows-build-tools npm package (not sure if this works, you're better off with the former option).
+
 
 ## Usage
 
 ### Dev Server
+It's not certain how often you should run this, but in order for sqlite3 to be packaged you need to run
+```bash
+npm run rebuild
+```
+
 To run the project in a development server
 ```bash
-npm run dev
+npm run start
 ```
 
 ### Dev Tools
 In the Electron app window, click 'View' then 'Toggle Developer Tools'.
 
+### Building For Production
+It's recommended to run this before building
+```bash
+npm run rebuild
+```
+
+#### WINDOWS
+```bash
+npm run make
+```
+
+#### OTHER OS
+TDB
+
 ### Linting
-If typing is too strict, add the linting config file to gitignore then change the linter config (ask Jordan how to do this). 
+If typing is too strict, add the linting config file to gitignore then change the linter config. 
 
 To run linting check
 ```bash
 npm run lint 
 ```
 
-To fix 'fixable' linting errors
-```bash
-npm run lint:fix
-```
-
 
 ## Contributing
 
-1. base your local on the main branch
+1. base your local on the prod-build branch
 2. create a feature branch
 3. commit and push your changes into the feature branch
 4. before merging your changes into main
@@ -112,14 +130,15 @@ e.g.: /src/assets/fonts/gotham-light.otf
 ```
 
 ### Electron
-Window settings and toolbar are stored in the electron folder in root dir: 
-* /electron/**/* 
+Window settings and toolbar are stored in the src dir: 
+* /src/index.ts
+* /src/index.html
+
+Context Bridge - ipcRenderer function declarations
+* /src/preload.js
 
 ### Dev Source Files
 Transpiled source files for web server stored in: /dist/* 
-
-## Building For Production
-TODO
 
 ## License
 TBD
