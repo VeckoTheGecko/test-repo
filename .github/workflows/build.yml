@@ -19,7 +19,7 @@ jobs:
       with:
         name: dist-ubuntu
         path: |
-          out
+          out/make/*
           !out/**/*.md
 
   build_on_mac:
@@ -39,7 +39,7 @@ jobs:
       with:
         name: dist-mac
         path: |
-          out
+          out/make/*
           !out/**/*.md
 
   build_on_win:
@@ -59,5 +59,5 @@ jobs:
       with:
         name: dist-win
         path: |
-          out
+          out/make/*
           !out/**/*.md
