@@ -3,13 +3,19 @@ import { Sequelize } from "sequelize";
 
 import { StudentModel } from "./models/student_sequelized";
 import { AppointmentModel } from "./models/appointment_sequelized";
-const path = require('path');
 
+let db_path;
+if (process.platform == "darwin") {
+  const path = require("path");
+  db_path = path.resolve(__dirname, "database.sqlite3");
+} else {
+  db_path = "database.sqlite3";
+}
 
 const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    dialectModule: sqlite,
-    storage: path.resolve(__dirname, 'database.sqlite3')
+  dialect: "sqlite",
+  dialectModule: sqlite,
+  storage: db_path,
 });
 
 const Student = StudentModel(sequelize, Sequelize);
