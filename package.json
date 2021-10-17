@@ -1,5 +1,5 @@
 {
-  "name": "STUDYSmarter Queue System",
+  "name": "cits3200-project",
   "productName": "STUDYSmarter Queue System",
   "version": "1.0.0",
   "description": "STUDYSmarter Queue System",
@@ -20,7 +20,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon":"./src/assets/icon/favicon"
+        "icon":"./src/assets/icon/favicon",
+        "executableName": "cits3200-project"
       },
       "makers": [
         {
